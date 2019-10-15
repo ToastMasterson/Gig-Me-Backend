@@ -1,16 +1,12 @@
 const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
 const jwt = require('express-jwt')
 const jwksRsa = require('jwks-rsa')
-const cors = require('cors')
-require('dotenv').config()
 
-app.use(cors())
+const app = express()
 
 const authConfig = {
-    domain: process.env.DOMAIN,
-    audience: process.env.AUDIENCE
+    domain: "gig-me.auth0.com",
+    audience: "http://localhost:3000/"
 }
 
 const checkJwt = jwt({
@@ -30,16 +26,6 @@ app.get('/api/external', checkJwt, (req, res) => {
     res.send({
         message: "Your Access Token was successfully validated!"
     })
-}) 
+})  
 
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
-
-module.exports = {
-    checkJwt
-}
-
-const port = process.env.PORT || 3001
-app.listen(port, () => {
-    console.log(`Listening on port ${port}...`)
-})
+app.listen(3001, () => console.log('API listening on 3001'))
