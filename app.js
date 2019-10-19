@@ -8,6 +8,12 @@ require('dotenv').config()
 
 app.use(cors())
 
+app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json())
+
+app.use('/api', require('./api/artists').router)
+
+
 const authConfig = {
     domain: process.env.DOMAIN,
     audience: process.env.AUDIENCE
@@ -31,9 +37,6 @@ app.get('/api/external', checkJwt, (req, res) => {
         message: "Your Access Token was successfully validated!"
     })
 }) 
-
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(bodyParser.json())
 
 module.exports = {
     checkJwt
