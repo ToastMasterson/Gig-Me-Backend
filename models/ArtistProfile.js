@@ -12,7 +12,7 @@ class ArtistProfile extends Model {
         const Artist = require('./Artist')
 
         return {
-            writer: {
+            owner: {
                 relation: Model.BelongsToOneRelation,
                 modelClass: Artist,
                 join: {

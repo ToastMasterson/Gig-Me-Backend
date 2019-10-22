@@ -8,9 +8,20 @@ class Artist extends Model {
         return 'artists'
     }
 
-    // static get relationMappings() {
-    //     const ArtistProfile = require('./ArtistProfile')
-    // }
+    static get relationMappings() {
+        const ArtistProfile = require('./ArtistProfile')
+        return {
+            artist_profile: {
+                relation: Model.HasOneRelation,
+                modelClass: ArtistProfile,
+                join: {
+                    from: 'artists.id',
+                    to: 'artist_profiles.artist_id'
+                }
+            }
+        }
+    }
+    
 }
 
 module.exports = Artist

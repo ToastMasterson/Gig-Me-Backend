@@ -1,6 +1,8 @@
 
 exports.up = function(knex) {
   return knex.schema.createTable('artist_profiles', t => {
+    t.increments('id').primary()
+    t.string('avatar')
     t.string('location')
     t.string('summary')
     t.string('influences')
@@ -10,9 +12,9 @@ exports.up = function(knex) {
     t.string('soundcloud')
     t.string('bandcamp')
     t.string('instagram')
-    t.json('members')
-    t.json('gear')
-    t.json('genres')
+    t.string('members')
+    t.string('gear')
+    t.string('genres')
     t.integer('artist_id')
   })
 };
