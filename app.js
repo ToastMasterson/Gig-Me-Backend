@@ -12,6 +12,10 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
 
 app.use('/api', require('./api/artists').router)
+app.use('/api', require('./api/events').router)
+app.use('/api', require('./api/bookers').router)
+app.use('/api', require('./api/venues').router)
+app.use('/api', require('./api/requests').router)
 
 
 const authConfig = {
