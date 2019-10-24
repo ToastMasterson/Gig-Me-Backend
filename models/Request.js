@@ -14,7 +14,7 @@ class Request extends Model {
         const Booker = require('./Booker')
         return {
             artist: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: Artist,
                 join: {
                     from: 'requests.id',
@@ -22,7 +22,7 @@ class Request extends Model {
                 }
             },
             event: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: Event,
                 join: {
                     from: 'requests.id',
@@ -30,7 +30,7 @@ class Request extends Model {
                 }
             },
             booker: {
-                relation: Model.HasOneRelation,
+                relation: Model.HasManyRelation,
                 modelClass: Booker,
                 join: {
                     from: 'requests.id',

@@ -38,20 +38,27 @@ router.delete('/events/:id', async (req, res) => {
     res.send({message: "Event successfully deleted from records"})
 })
 
-router.post('/events/:id/request', (req, res) => {
-    Request.query().insert(req.body).then(request => res.json(request))
+router.post('/events/:id/request', async (req, res) => {
+    console.log(req.body)
+    Request.query().insert({
+        artist_id: req.body.artist_id,
+        booker_id: req.body.booker_id,
+        event_id: req.body.event_id,
+        message: req.body.message
+    }).then(request => res.json(request))
 })
 
 router.post('/events/:id/addArtist', async (req, res) => {
+    console.log(req.body.artist_id, req.params.id)
     const addedArtist = await transaction(knex, async (trx) => {
         const event = await Event.query(trx).findById(req.params.id)
             // .eager('artists')
         const addedArtist = await event
         .$relatedQuery('artists_events', trx)
-        .insert(req.body)
+        .insert({artist_id: req.body.artist_id, event_id: req.params.id})
         return addedArtist
     })
-    Request.query().delete().where('event_id', req.params.id)
+    await Request.query().delete().where('event_id', req.params.id)
     res.send(addedArtist)
 })
 

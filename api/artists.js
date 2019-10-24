@@ -5,6 +5,7 @@ const {transaction} = require('objection')
 const Artist = require('../models/Artist')
 const ArtistProfile = require('../models/ArtistProfile')
 const ArtistEvent = require('../models/ArtistEvent')
+const Request = require('../models/Request')
 
 const knex = Artist.knex()
 
@@ -53,6 +54,11 @@ router.delete('/artists/:id', async (req, res) => {
 router.get('/profiles/:id', (req, res) => {
     ArtistProfile.query().where('id', req.params.id)
     .then(profile => res.json(profile))
+})
+
+router.get('/artists/:id/requests', (req, res) => {
+    Request.query().where('artist_id', req.params.id)
+    .eager('[booker, event]').then(requests => res.json(requests))
 })
 
 router.patch('/profiles/:id', (req, res) => {
